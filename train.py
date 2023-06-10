@@ -15,31 +15,38 @@ from dataset import CIFAR10
 def parse_args():
     parser = argparse.ArgumentParser(prog='CIFAR10 classifier trainer')
     parser.add_argument(
-        '--device', default='cpu',
+        '--device', type=str,
+        default='cpu',
         help='Execution device',
     )
     parser.add_argument(
-        '--epochs', default=100,
+        '--epochs', type=int,
+        default=100,
         help='Epochs to train',
     )
     parser.add_argument(
-        '--logdir', default='logs',
+        '--logdir', type=str,
+        default='logs',
         help='Path to train logs',
     )
     parser.add_argument(
-        '--val_interval', default=None,
+        '--val_interval', type=int,
+        default=None,
         help='Validation check interval',
     )
     parser.add_argument(
-        '--train_batch', default=64,
+        '--train_batch', type=int,
+        default=64,
         help='Train batch size',
     )
     parser.add_argument(
-        '--val_batch', default=32,
+        '--val_batch', type=int,
+        default=32,
         help='Validation batch size',
     )
     parser.add_argument(
-        '--labels_map', default='labels.json',
+        '--labels_map', type=str,
+        default='labels.json',
         help='Path to JSON with labels map',
     )
     return parser.parse_args()
