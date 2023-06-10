@@ -19,7 +19,7 @@ def parse_args():
         help='Execution device',
     )
     parser.add_argument(
-        '--epochs', default=2,
+        '--epochs', default=100,
         help='Epochs to train',
     )
     parser.add_argument(

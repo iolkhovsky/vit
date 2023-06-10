@@ -29,15 +29,15 @@ class CIFAR10(pl.LightningDataModule):
         ])
 
     def train_dataloader(self) -> DataLoader:
-        trainset = torchvision.datasets.CIFAR10(root='./data', train=True,
-                                                download=True, transform=self._train_xform)
-        trainloader = torch.utils.data.DataLoader(trainset, batch_size=self._train_batch,
-                                                shuffle=True, num_workers=2)
+        trainset = torchvision.datasets.CIFAR10(
+            root='./data', train=True, download=True, transform=self._train_xform)
+        trainloader = torch.utils.data.DataLoader(
+            trainset, batch_size=self._train_batch, shuffle=True)
         return trainloader
 
     def val_dataloader(self) -> DataLoader:
-        testset = torchvision.datasets.CIFAR10(root='./data', train=False,
-                                            download=True, transform=self._val_xform)
-        testloader = torch.utils.data.DataLoader(testset, batch_size=self._val_batch,
-                                                shuffle=False, num_workers=2)
+        testset = torchvision.datasets.CIFAR10(
+            root='./data', train=False, download=True, transform=self._val_xform)
+        testloader = torch.utils.data.DataLoader(
+            testset, batch_size=self._val_batch, shuffle=False)
         return testloader
