@@ -115,7 +115,7 @@ def plot_image_matrix(image_list, row_size):
     plt.show()
 
 
-def visualize_prediction(img, text=None, attention=None):
+def visualize_prediction(img, text=None, attention=None, normalize_attention=True):
     matplotlib.use('Agg')
     assert isinstance(img, np.ndarray)
     assert len(img.shape) == 3
@@ -128,6 +128,8 @@ def visualize_prediction(img, text=None, attention=None):
         assert np.all(np.greater_equal(attention, 0))
         assert np.all(np.less_equal(attention, 1.))
         attention = cv2.resize(attention, (h, w), interpolation=cv2.INTER_CUBIC)
+        if normalize_attention:
+            attention = np.divide(attention, np.max(attention))
         img = img * attention[..., None]
         img = np.minimum(255, np.maximum(0, img)).astype(np.uint8)
 
