@@ -17,6 +17,12 @@ def compute_accuracy(logits, targets):
     return accuracy
 
 
+def tensor_to_numpy(tensor):
+    if tensor.device != torch.device('cpu'):
+        tensor = tensor.cpu()
+    return tensor.numpy()
+
+
 class VitClassifier(pl.LightningModule):
     def __init__(self, num_classes=10, labels_map=None, *args, **kwargs):
         super().__init__()
@@ -102,16 +108,16 @@ class VitClassifier(pl.LightningModule):
         predictions, inputs = [], []
         for image, target, pred_label, score, map in \
                 zip(images, targets, pred_labels, pred_scores, attn_map):
-            image = image.numpy().astype(np.uint8)
-            score_str = '{:.3f}'.format(score)
-            target_label = int(target)
-            pred_label = int(pred_label)
+            image = tensor_to_numpy(image).astype(np.uint8)
+            score_str = '{:.3f}'.format(tensor_to_numpy(score))
+            target_label = int(tensor_to_numpy(target))
+            pred_label = int(tensor_to_numpy(pred_label))
             if self._labels_map is not None:
                 target_label = self._labels_map[target_label]
                 pred_label = self._labels_map[pred_label]
             text = f'Target: {target_label}'
             text += f'\nPrediction: {pred_label} Score: {score_str}'
-            attn = map.numpy()
+            attn = tensor_to_numpy(map)
             predictions.append(
                 visualize_prediction(
                     img=image,
